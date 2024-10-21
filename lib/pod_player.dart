@@ -2,6 +2,7 @@
 library pod_player;
 
 export 'package:video_player/video_player.dart';
+export 'package:youtube_explode_dart/src/videos/youtube_api_client.dart';
 
 export 'src/controllers/pod_player_controller.dart';
 export 'src/models/overlay_options.dart';

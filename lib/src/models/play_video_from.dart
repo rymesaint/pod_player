@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+
 import '../../pod_player.dart';
 
 class PlayVideoFrom {
@@ -14,6 +16,7 @@ class PlayVideoFrom {
   final VideoPlayerOptions? videoPlayerOptions;
   final Map<String, String> httpHeaders;
   final bool live;
+  final List<YoutubeApiClient>? ytClients;
 
   const PlayVideoFrom._({
     required this.playerType,
@@ -26,6 +29,7 @@ class PlayVideoFrom {
     this.videoQualityUrls,
     this.closedCaptionFile,
     this.videoPlayerOptions,
+    this.ytClients,
     this.httpHeaders = const {},
   });
 
@@ -117,6 +121,7 @@ class PlayVideoFrom {
     VideoFormat? formatHint,
     Future<ClosedCaptionFile>? closedCaptionFile,
     VideoPlayerOptions? videoPlayerOptions,
+    List<YoutubeApiClient>? ytClients,
     Map<String, String> httpHeaders = const {},
   }) {
     return PlayVideoFrom._(
@@ -127,6 +132,7 @@ class PlayVideoFrom {
       closedCaptionFile: closedCaptionFile,
       videoPlayerOptions: videoPlayerOptions,
       httpHeaders: httpHeaders,
+      ytClients: ytClients,
     );
   }
   factory PlayVideoFrom.networkQualityUrls({

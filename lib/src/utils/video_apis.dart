@@ -122,8 +122,9 @@ class VideoApis {
 
   static Future<List<VideoQalityUrls>?> getYoutubeVideoQualityUrls(
     String youtubeIdOrUrl,
-    bool live,
-  ) async {
+    bool live, {
+    List<YoutubeApiClient>? ytClients,
+  }) async {
     try {
       final yt = YoutubeExplode();
       final urls = <VideoQalityUrls>[];
@@ -138,17 +139,17 @@ class VideoApis {
           ),
         );
       } else {
-        final manifest =
-            await yt.videos.streamsClient.getManifest(youtubeIdOrUrl);
+        final manifest = await yt.videos.streamsClient.getManifest(
+          youtubeIdOrUrl,
+          ytClients: ytClients,
+        );
         urls.addAll(
-          manifest.hls
-              .where((element) => element.qualityLabel.split('p')[0].isNotEmpty)
-              .map(
-                (element) => VideoQalityUrls(
-                  quality: int.parse(element.qualityLabel.split('p')[0]),
-                  url: element.url.toString(),
-                ),
-              ),
+          manifest.muxed.map(
+            (element) => VideoQalityUrls(
+              quality: int.parse(element.qualityLabel.split('p')[0]),
+              url: element.url.toString(),
+            ),
+          ),
         );
       }
       // Close the YoutubeExplode's http client.
