@@ -141,12 +141,14 @@ class VideoApis {
         final manifest =
             await yt.videos.streamsClient.getManifest(youtubeIdOrUrl);
         urls.addAll(
-          manifest.muxed.map(
-            (element) => VideoQalityUrls(
-              quality: int.parse(element.qualityLabel.split('p')[0]),
-              url: element.url.toString(),
-            ),
-          ),
+          manifest.hls
+              .where((element) => element.qualityLabel.split('p')[0].isNotEmpty)
+              .map(
+                (element) => VideoQalityUrls(
+                  quality: int.parse(element.qualityLabel.split('p')[0]),
+                  url: element.url.toString(),
+                ),
+              ),
         );
       }
       // Close the YoutubeExplode's http client.
