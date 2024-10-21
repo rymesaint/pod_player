@@ -252,8 +252,10 @@ class PodPlayerController {
   static Future<List<VideoQalityUrls>?> getYoutubeUrls(
     String youtubeIdOrUrl, {
     bool live = false,
+    List<YoutubeApiClient>? ytClients,
   }) {
-    return VideoApis.getYoutubeVideoQualityUrls(youtubeIdOrUrl, live);
+    return VideoApis.getYoutubeVideoQualityUrls(youtubeIdOrUrl, live,
+        ytClients: ytClients);
   }
 
   static Future<List<VideoQalityUrls>?> getVimeoUrls(
